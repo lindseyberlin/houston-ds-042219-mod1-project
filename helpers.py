@@ -3,10 +3,15 @@ import datetime
 import time
 
 
+# to_int: Turns float values into integers
 def to_int(x):
     return int(float(x))
 
 
+# replace_null_basement: Replaces placeholder nulls, in original csv as "?",
+# with the value of (sqft_living - sqft_above) as an int
+# 
+# Usage: df["sqft_basement"] = df.apply(replace_null_basement(df), axis = 1)
 def replace_null_basement(df):
     def func(x):
         result = ""
@@ -18,6 +23,8 @@ def replace_null_basement(df):
     return func
 
 
+# to_posix: Turns strings into UNIX time, assuming the string is formatted as
+# month day year and separated by / or -
 def to_posix(date):
     dt = datetime.datetime.strptime(date.replace("/", "-"), "%m-%d-%Y")
     posix_dt = time.mktime(dt.timetuple())
